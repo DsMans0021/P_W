@@ -1,11 +1,7 @@
-// All code below is original and purpose-built for this site.
-
-// Utility: get element by id
 function byId(id) {
     return document.getElementById(id);
 }
 
-// 1) Theme Toggle (visible page-wide effect)
 function toggleTheme() {
     document.body.classList.add('theme-transition');
     const isDark = document.body.classList.toggle('dark');
@@ -13,7 +9,6 @@ function toggleTheme() {
     setTimeout(() => document.body.classList.remove('theme-transition'), 350);
 }
 
-// Restore theme preference on load
 function restoreThemePreference() {
     const stored = localStorage.getItem('prefersDark');
     if (stored === 'true') {
@@ -21,7 +16,6 @@ function restoreThemePreference() {
     }
 }
 
-// 2) Scroll Progress (visible at top)
 function updateScrollProgress() {
     const progress = byId('scroll-progress');
     if (!progress) return;
@@ -31,7 +25,6 @@ function updateScrollProgress() {
     progress.style.width = pct + '%';
 }
 
-// 3) Browser Info Detector (writes text to page)
 function detectBrowserInfo() {
     const infoEl = byId('browser-info');
     if (!infoEl) return;
@@ -41,7 +34,6 @@ function detectBrowserInfo() {
     infoEl.textContent = `User agent: ${ua} | Language: ${lang} | Network: ${online}`;
 }
 
-// 4) Accent Color Cycler (also updates CSS variable + preview)
 const accentQueue = [
     { h: 230, s: '85%', l: '56%', label: 'Indigo' },
     { h: 190, s: '90%', l: '50%', label: 'Cyan' },
@@ -65,7 +57,6 @@ function cycleAccentColor() {
     if (dot) dot.style.background = `hsl(${next.h} ${next.s} ${next.l})`;
 }
 
-// 5) Confetti Renderer (simple canvas burst)
 function renderConfettiBurst() {
     const canvas = byId('confetti-canvas');
     if (!canvas) return;
@@ -95,7 +86,7 @@ function renderConfettiBurst() {
         particles.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.03; // gravity
+            p.vy += 0.03;
             ctx.fillStyle = `hsl(${p.hue} 90% 55%)`;
             ctx.fillRect(p.x, p.y, p.size, p.size);
         });
@@ -105,7 +96,6 @@ function renderConfettiBurst() {
     tick();
 }
 
-// 6) Live Clock (visible text updates)
 function startLiveClock() {
     const out = byId('live-clock');
     if (!out) return;
@@ -120,7 +110,6 @@ function startLiveClock() {
     return setInterval(update, 1000);
 }
 
-// 7) Achievements Tech Filter (toggle highlight)
 function toggleAchievementsFilter() {
     const list = document.querySelectorAll('#achievements li');
     if (!list || list.length === 0) return;
@@ -131,7 +120,6 @@ function toggleAchievementsFilter() {
     });
 }
 
-// 8) Lab page helpers (only run if elements exist)
 function initializeMixer() {
     const red = byId('mix-r');
     const green = byId('mix-g');
@@ -169,18 +157,15 @@ function initializeTiltCard() {
     });
 }
 
-// 9) Example of JavaScript spread usage
 function mergeUniqueSkills() {
     const core = ['Unity', 'Python', 'Cybersecurity'];
     const more = ['Raspberry Pi', 'Automation', 'Unity'];
     const mergedUnique = [...new Set([...core, ...more])];
-    // Display it if there is a target element
     const el = byId('merged-skills');
     if (el) el.textContent = mergedUnique.join(' • ');
     return mergedUnique;
 }
 
-// Wire up all events on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     restoreThemePreference();
     updateScrollProgress();
@@ -204,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtn = byId('toggle-achievements-filter');
     if (filterBtn) filterBtn.addEventListener('click', toggleAchievementsFilter);
 
-    // Lab page specific initializers
     initializeMixer();
     initializeTiltCard();
     mergeUniqueSkills();
